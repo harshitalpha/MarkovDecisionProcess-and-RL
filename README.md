@@ -1,4 +1,4 @@
-# MarkovDecisionProcess-and-RL
+#MarkovDecisionProcess-and-RL
 
 Our Project: Given a network with vertices and edges. Design the MDP to nevigate through the network. 
             Solve this through Reinforcement learning
@@ -22,17 +22,7 @@ Graph Network we should use:
 We should use a graph network that is neither so complicated nor so easy.
 I think we should use the version of Grid World (discussed in the Lectures), since it is prrtty easy to design and nevigate
 
-# # # & # # *
-# # # & # # @'
-# # # # # # @'
-# # @ @ @ # *
-
-Here # are the normal state from which we can move to North, South, East, West
-& are the walls our agent can not step on them 
-* are good exit with reward of +50
-@ are bad exit with reward of -50
-@' are very bad exit with reward of -100
-each transition has reward of -2 
-Start state can be Bottom Left #
 
 Our Agent need to find the best policy to nevigate through the network
+
+Monday Nov 2, 12:35 AM  - Added Grid World - Tested Working Fine Till Now 
