@@ -51,7 +51,7 @@ class GridWorld:
         
     
     def printGrid(self):
-        print(grid)
+        print(self.grid)
 
     def getPossibleActions(self, state):
         if state == self.terminalState:
@@ -80,6 +80,11 @@ class GridWorld:
                     state = (x,y)
                     states.append(state)
         return states
+    
+    def isTerminal(self, state):
+        if state == self.terminalState:
+            return True
+        return False
 
     def getReward(self, state, action, nextState):
         if state == self.terminalState:
@@ -159,19 +164,19 @@ class GridWorld:
         return (nextState, reward)
 
 
-if __name__ == '__main__':
-    grid = [[' ',' ',' ',' ',' '],
-            ['S',' ',' ',' ',10],
-            [-100,-100, -100, -100, -100]]
+# if __name__ == '__main__':
+#     grid = [[' ',' ',' ',' ',' '],
+#             ['S',' ',' ',' ',10],
+#             [-100,-100, -100, -100, -100]]
     
-    G = GridWorld(grid, 0.2, -1.0)
-    state = (1,4)
-    # print(state)
-    # print(G.getPossibleActions(state))
-    # print(G.getRandomState(state, 'east'))
-    # print(G.getNextStateAndProbs(state, 'east'))
-    # print(G.getReward(state, 'east', 'TERMINAL_STATE'))
-    # print(G.doAction('east'))
+#     G = GridWorld(grid, 0.2, -1.0)
+#     state = (1,4)
+#     print(state)
+#     print(G.getPossibleActions(state))
+#     print(G.getRandomState(state, 'east'))
+#     print(G.getNextStateAndProbs(state, 'east'))
+#     print(G.getReward(state, 'east', 'TERMINAL_STATE'))
+#     print(G.doAction('east'))
 
     
     
