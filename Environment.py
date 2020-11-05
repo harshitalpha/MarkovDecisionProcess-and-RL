@@ -150,18 +150,24 @@ class GridWorld:
 
     def getRandomState(self, state, action):
         nextStates = self.getNextStateAndProbs(state, action)
-        print(nextStates)
-        possibleState = [row[0] for row in nextStates]
-        stateProbs = [row[1] for row in nextStates]
-        nextState = random.choices(possibleState, weights=stateProbs, k = 1)[0]
-        reward = self.getReward(state, action, nextState)
-        return (nextState, reward) 
+        if nextStates != 'Illegal Action':
+            possibleState = [row[0] for row in nextStates]
+            stateProbs = [row[1] for row in nextStates]
+            nextState = random.choices(possibleState, weights=stateProbs, k = 1)[0]
+            reward = self.getReward(state, action, nextState)
+            return (nextState, reward) 
+        else:
+            return "Illegal Action"
     
     def doAction(self, action):
         state = self.getCurrentState()
-        (nextState, reward) = self.getRandomState(state, action)
-        self.state = nextState
-        return (nextState, reward)
+        nextStateAction = self.getRandomState(state, action)
+        if nextStateAction != "Illegal Action":
+            nextState, reward = nextStateAction[0], nextStateAction[1]
+            self.state = nextState
+            return (nextState, reward)
+        else:
+            return "Illegal Action"
 
 
 # if __name__ == '__main__':
