@@ -1,6 +1,8 @@
 from Environment import GridWorld
+from tqdm import tqdm
 import collections
 import random
+import os
 
 class QLearning:
 
@@ -14,15 +16,24 @@ class QLearning:
         self.values = collections.defaultdict(lambda : 0.0)
         self.finalActions = collections.defaultdict(lambda : None)
         self.states = self.Grid.getStates()
+        self.countExit = 0
 
 
     def train(self):
-        k = 0
-        while k < self.epochs:
-            pass
+        state = self.Grid.getStartState()
+        for _ in tqdm(range(self.epochs)):
+            action = self.getNextAction(state)
+            if action == None:
+                state = self.Grid.getStartState()
+                continue
+            nextState, reward = self.Grid.doAction(state, action)
+            if nextState == "TERMINAL_STATE":
+                self.countExit += 1
+            self.UpdateQValues(state, action, nextState, reward)
+            state = nextState
 
     def UpdateQValues(self, state, action, nextstate, reward):
-        sample = reward + self.discount * self.computeValuesFromQValues(state)
+        sample = reward + self.discount * self.computeValuesFromQValues(nextstate)
         self.qValues[(state, action)] = (1-self.alpha) * self.qValues[(state, action)] + self.alpha * sample
 
     def computeActionsFromQValues(self, state):
@@ -46,15 +57,30 @@ class QLearning:
 
     def getNextAction(self, state):
         nextPossibleAction = self.Grid.getPossibleActions(state)
+        if nextPossibleAction == []:
+            return None
         action = None
-
         if random.random() <= self.epsilon:
             action = random.choice(nextPossibleAction)
-        
         else:
             action = self.computeActionsFromQValues(state)
-        
         return action
+    
+    def getQValues(self):
+        return self.qValues
+    
+    def getValues(self):
+        states = self.Grid.getStates()
+        for state in states:
+            self.values[state] = self.computeValuesFromQValues(state)
+        return self.values
+    
+    def getActions(self):
+        states = self.Grid.getStates()
+        for state in states:
+            self.finalActions[state] = self.computeActionsFromQValues(state)
+        return self.finalActions
+    
 
 
 

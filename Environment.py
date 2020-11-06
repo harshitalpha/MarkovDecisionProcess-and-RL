@@ -159,8 +159,7 @@ class GridWorld:
         else:
             return "Illegal Action"
     
-    def doAction(self, action):
-        state = self.getCurrentState()
+    def doAction(self, state, action):
         nextStateAction = self.getRandomState(state, action)
         if nextStateAction != "Illegal Action":
             nextState, reward = nextStateAction[0], nextStateAction[1]

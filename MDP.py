@@ -1,5 +1,6 @@
 import collections
 from Environment import GridWorld
+from tqdm import tqdm
 
 class MarkovDecisonProcess:
 
@@ -15,7 +16,7 @@ class MarkovDecisonProcess:
     
     def ValueIteration(self):
         k = 0
-        while k < self.iteration:
+        for i in tqdm(range(self.iteration)):
             nextValues = self.values.copy()
             nextQValues = self.QValues.copy()
             for state in self.states:
@@ -33,8 +34,7 @@ class MarkovDecisonProcess:
             self.QValues = nextQValues
             for state in self.states:
                 self.finalActions[state] = self.computeActionFromValues(state)
-            
-            k += 1
+
 
     def computeQValues(self, state, action):
         transactionProbs = self.Grid.getNextStateAndProbs(state, action)
